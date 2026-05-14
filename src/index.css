@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-glow: #FFFFFF;
+  --color-neon: #A5F2FF;
+  --color-metallic: #8E9AAF;
+  --color-night: #0A192F;
+  --color-black-pure: #000000;
+  
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-black-pure);
+    color: #8E9AAF; /* Base text color from theme */
+  }
+  
+  body {
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #A5F2FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-shadow {
+  box-shadow: 0 0 25px rgba(165, 242, 255, 0.2);
+}
+
+.glow-border {
+  border: 1px solid #0A192F;
+}
+
+.neon-border {
+  border: 1px solid rgba(165, 242, 255, 0.2);
+}
+
+/* Hide scrollbar for clean carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #0A192F;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #A5F2FF;
+}
