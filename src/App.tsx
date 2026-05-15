@@ -57,31 +57,14 @@ const Navbar = () => (
 
       {/* Center: Hero Logo */}
       <div className="flex justify-center flex-1">
-        <div className="flex items-center gap-3 relative group cursor-pointer">
+        <div className="relative h-14 group cursor-pointer inline-flex items-center">
           {/* Subtle Glow Background */}
-          <div className="absolute inset-0 bg-neon/5 blur-2xl rounded-full scale-150 group-hover:bg-neon/10 transition-all" />
-          
-          {/* Logo Visual (Musical Note + Circuit feel) */}
-          <div className="relative flex items-center gap-4">
-             <div className="relative w-10 h-10 flex items-center justify-center">
-               <svg viewBox="0 0 24 24" className="w-full h-full text-neon drop-shadow-[0_0_8px_#A5F2FF]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18V5l12-2v13" />
-                  <circle cx="6" cy="18" r="3" />
-                  <circle cx="18" cy="16" r="3" />
-                  {/* Small Circuit Accent */}
-                  <path d="M2 12h3M19 12h3M12 2v3M12 19v3" strokeWidth="1" opacity="0.5" />
-               </svg>
-             </div>
-             
-             <div className="flex flex-col items-center">
-                <span className="text-white font-black text-2xl tracking-tighter uppercase leading-none drop-shadow-[0_4px_10px_rgba(255,255,255,0.3)]">
-                  IMPULSO
-                </span>
-                <span className="text-metallic italic text-[9px] font-black uppercase tracking-[0.4em] mt-0.5 leading-none">
-                  MUSICAL
-                </span>
-             </div>
-          </div>
+          <div className="absolute inset-0 bg-neon/10 blur-2xl rounded-full scale-110 group-hover:bg-neon/20 transition-all" />
+          <img 
+            src="https://lh3.googleusercontent.com/d/1owzhXUcb4cm7ZVl_xDhsHevrNkbD_y0Y" 
+            alt="Impulso Musical Logo" 
+            className="h-full w-auto relative z-10 object-contain drop-shadow-[0_0_8px_#A5F2FF]"
+          />
         </div>
       </div>
 
@@ -113,9 +96,9 @@ const Hero = () => {
               Validado no YouTube • 50k/Mês Orgânico
             </span>
             <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] uppercase tracking-tighter">
-              Revelei: O Método para <br />
+              O JEITO CERTO PARA <br />
               <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.6)]">Viver de Música</span> <br />
-              Usando IA
+              USANDO IA NAS PLATAFORMAS DIGITAIS
             </h1>
             <p className="text-lg md:text-xl leading-relaxed text-metallic max-w-xl">
               Saia do absoluto zero ou do estagnado e alcance resultados profissionais com o passo a passo de quem já fatura no mercado.
@@ -139,7 +122,7 @@ const Hero = () => {
                   </div>
                 ))}
                 <div className="ml-6 flex flex-col items-start leading-none">
-                  <span className="text-white font-black text-sm">+12.400 Alunos</span>
+                  <span className="text-white font-black text-sm">+1.500 Alunos</span>
                   <span className="text-[10px] uppercase text-metallic tracking-widest mt-1">Conteúdo validado</span>
                 </div>
               </div>
@@ -415,9 +398,9 @@ const Authority = () => (
             <div className="absolute inset-0 bg-neon/10 blur-[80px] rounded-full group-hover:bg-neon/20 transition-all" />
             <div className="relative z-10 w-full max-w-sm aspect-square rounded-[2rem] overflow-hidden border border-neon/20 p-2 bg-night/20 backdrop-blur-sm">
                 <img 
-                   src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop" 
+                   src="https://lh3.googleusercontent.com/d/1WWuhz3FzpQEHpGECsJ0gKIO2syz4Ut1N" 
                    alt="Milton Tucunduva" 
-                   className="w-full h-full object-cover rounded-[1.8rem] grayscale group-hover:grayscale-0 transition-all duration-700"
+                   className="w-full h-full object-cover rounded-[1.8rem] transition-all duration-700"
                 />
             </div>
           </div>
@@ -428,7 +411,7 @@ const Authority = () => (
           </h2>
           <h3 className="text-4xl md:text-6xl font-black text-white italic uppercase leading-none">Milton Tucunduva</h3>
           <p className="text-metallic text-lg leading-relaxed max-w-2xl">
-            Com anos de experiência no mercado musical e no YouTube, Milton Tucunduva não apenas ensina — ele vive os resultados que prega. Ele já ajudou milhares de alunos a saírem do completo zero para projetos profissionais validados pelo mercado e faturando alto.
+            Especialista em criação de projetos de música com IA, Milton Tucunduva vai muito além de apenas dar o passo a passo; ele faz o aluno aprender a ter autonomia e criar um PROJETO DE SUCESSO! Com faturamento alto em várias plataformas digitais no nicho de música, ele ensina exatamente o que aplica em seus projetos. Já ajudou milhares de alunos a saírem do completo zero para projetos profissionais, validados no mercado digital e faturando alto.
           </p>
           <div className="grid grid-cols-2 gap-8 py-8 border-y border-[#0A192F]">
              <div>
@@ -436,7 +419,7 @@ const Authority = () => (
                 <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">Faturamento Mensal</p>
              </div>
              <div>
-                <p className="text-4xl font-black text-white tracking-tighter">12.4K+</p>
+                <p className="text-4xl font-black text-white tracking-tighter">1.5K+</p>
                 <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">Alunos Ativos</p>
              </div>
           </div>
