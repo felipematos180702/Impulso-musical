@@ -57,7 +57,7 @@ const Navbar = () => (
 
       {/* Center: Hero Logo */}
       <div className="flex justify-center flex-1">
-        <div className="relative h-14 group cursor-pointer inline-flex items-center">
+        <div className="relative h-20 group cursor-pointer inline-flex items-center">
           {/* Subtle Glow Background */}
           <div className="absolute inset-0 bg-neon/10 blur-2xl rounded-full scale-110 group-hover:bg-neon/20 transition-all" />
           <img 
@@ -108,9 +108,7 @@ const Hero = () => {
               <motion.a 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://pay.kiwify.com.br/nIxnMML"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#pricing"
                 className="w-full sm:w-auto bg-neon text-black font-black py-5 px-10 rounded-lg shadow-[0_0_25px_rgba(165,242,255,0.4)] hover:shadow-[0_0_40px_rgba(165,242,255,0.6)] transition-all uppercase tracking-tighter text-center"
               >
                 Quero meu acesso agora
@@ -171,7 +169,6 @@ const SocialProof = () => {
           <p className="text-neon font-bold tracking-widest mb-4">CONTEÚDO VALIDADO</p>
           <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all">
              <div className="flex items-center gap-2 text-2xl font-bold"><Users /> MILHARES DE ALUNOS</div>
-             <div className="flex items-center gap-2 text-2xl font-bold">YOUTUBE VALIDATED</div>
           </div>
         </div>
 
@@ -357,7 +354,7 @@ const ModulesCarousel = () => {
       <div className="relative group/carousel">
         <motion.div 
            animate={{ x: ["0%", "-50%"] }}
-           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
            className="flex gap-6 whitespace-nowrap py-10"
         >
           {[...modules, ...modules].map((m, i) => (
