@@ -577,9 +577,8 @@ export default function App() {
       <Reveal><FAQ /></Reveal>
       
       <footer className="py-12 border-t border-neon/10 text-center opacity-50 text-xs">
-          <div className="max-w-7xl mx-auto px-4">
-              <p className="mb-4">© 2026 Impulso Musical - Todos os direitos reservados.</p>
-              <p>Este site não faz parte do Google ou da Meta. Os resultados podem variar de pessoa para pessoa.</p>
+          <div className="max-w-7xl mx-auto px-4 text-center">
+              <p>© 2026 Impulso Musical - Todos os direitos reservados.</p>
           </div>
       </footer>
     </div>
