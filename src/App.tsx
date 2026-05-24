@@ -154,7 +154,7 @@ const Hero = () => {
 
 const SocialProof = () => {
   const testimonials = [
-    { name: "Carlos S.", loc: "São Paulo, SP", text: "Minha técnica mudou completamente em 3 semanas. Incrível!" },
+    { name: "Carlos S.", loc: "São Paulo, SP", text: "Minha técnica mudou completamente em 3 semanas. Incrível!!" },
     { name: "Júlia M.", loc: "Curitiba, PR", text: "Nunca imaginei que poderia usar IA pra criar clipes tão bons." },
     { name: "Ricardo T.", loc: "Lisboa, PT", text: "Finalmente um método que foca em ganhar dinheiro com a música." },
     { name: "Beatriz L.", loc: "Belo Horizonte, MG", text: "O suporte no WhatsApp é o diferencial. Milton é fera!" },
