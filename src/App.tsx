@@ -85,11 +85,11 @@ const CountdownBanner = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-black-pure/95 border-b border-red-500/30 backdrop-blur-md py-2 px-4 shadow-[0_4px_30px_rgba(239,68,68,0.15)] flex flex-row items-center justify-between text-center relative pointer-events-auto">
+    <div className="fixed top-0 left-0 w-full z-50 bg-black-pure/95 border-b border-green-500/30 backdrop-blur-md py-2 px-4 shadow-[0_4px_30px_rgba(34,197,94,0.15)] flex flex-row items-center justify-between text-center pointer-events-auto">
       <div className="flex items-center gap-1.5 text-white font-black uppercase text-[9px] sm:text-[10px] tracking-wider text-left">
         <span className="relative flex h-2 w-2 flex-shrink-0">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
         </span>
         <span className="leading-tight sm:hidden max-w-[120px]">Acesso Expirando</span>
         <span className="leading-tight hidden sm:block">Atenção: Acesso Promocional Expirando</span>
@@ -99,9 +99,9 @@ const CountdownBanner = () => {
         Últimas vagas com desconto — confirme antes do tempo acabar.
       </p>
 
-      <div className="flex items-center gap-1.5 bg-red-950/40 border border-red-500/40 px-2.5 py-1.5 rounded-lg shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-        <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-red-400 flex-shrink-0">Restam:</span>
-        <span className="font-mono text-xs sm:text-sm font-black text-red-500 flex-shrink-0">{formatTime(timeLeft)}</span>
+      <div className="flex items-center gap-1.5 bg-green-950/40 border border-green-500/40 px-2.5 py-1.5 rounded-lg shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+        <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-green-400 flex-shrink-0">Restam:</span>
+        <span className="font-mono text-xs sm:text-sm font-black text-green-500 flex-shrink-0">{formatTime(timeLeft)}</span>
       </div>
     </div>
   );
@@ -133,9 +133,23 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden border-b border-[#0A192F]">
-      <div className="max-w-5xl mx-auto px-8 relative z-10 text-center flex flex-col items-center space-y-12">
+    <section className="relative pt-20 sm:pt-24 pb-12 sm:pb-20 overflow-hidden border-b border-[#0A192F]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 relative z-10 text-center flex flex-col items-center space-y-4 sm:space-y-6">
         
+        {/* Course Logo */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="w-56 sm:w-72 md:w-96 flex justify-center mt-2 sm:mt-4"
+        >
+          <img 
+            src="https://lh3.googleusercontent.com/d/1WSURJgaUAr0moOThvWhmKbDrnaoJ5QJt" 
+            alt="Logo Impulso Musical" 
+            className="w-full h-auto object-contain mix-blend-screen [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)] drop-shadow-[0_0_15px_rgba(165,242,255,0.2)]"
+          />
+        </motion.div>
+
         {/* Header content stacked & centered */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -178,14 +192,13 @@ const Hero = () => {
                 exit={{ opacity: 0 }}
                 className="absolute inset-0 flex flex-col items-center justify-center bg-transparent pointer-events-none z-20 transition-all duration-500"
               >
-                {/* Visual pulse indicator to click below or above the native Play button */}
+                {/* Custom Play Button Overlay */}
                 <motion.div 
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                  className="px-6 py-3 bg-night text-white font-black rounded-full border border-neon/50 text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2 select-none"
+                  className="bg-neon/90 text-black rounded-full p-4 sm:p-6 lg:p-8 flex items-center justify-center shadow-[0_0_40px_rgba(165,242,255,0.5)] select-none backdrop-blur-sm pointer-events-none"
                 >
-                  <span>Clique abaixo para dar Play com Som</span>
-                  <span className="animate-bounce">🔊</span>
+                  <Play className="w-10 h-10 sm:w-16 sm:h-16 lg:w-20 lg:h-20 fill-black translate-x-1 sm:translate-x-2" />
                 </motion.div>
               </motion.div>
             )}
@@ -298,10 +311,10 @@ const SocialProof = () => {
               transition={{ delay: i * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
               onClick={() => setSelectedImgId(t.imgId)}
-              className="bg-night/50 rounded-[32px] border border-neon/10 hover:border-neon/30 transition-all overflow-hidden flex flex-col cursor-pointer group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(165,242,255,0.15)] relative h-full"
+              className="bg-night/50 rounded-2xl sm:rounded-[32px] border border-neon/10 hover:border-neon/30 transition-all overflow-hidden flex flex-col cursor-pointer group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(165,242,255,0.15)] relative h-full max-w-[240px] sm:max-w-none mx-auto w-full"
             >
             <div className="w-full h-full relative overflow-hidden flex items-start justify-center bg-black/40">
-              <div className="relative aspect-[3/4] w-full max-w-[280px] sm:max-w-full">
+              <div className="relative aspect-[3/4] w-full max-w-[240px] sm:max-w-full">
                 <img 
                   src={`https://lh3.googleusercontent.com/d/${t.imgId}`} 
                   alt={`Depoimento de ${t.name}`}
@@ -580,14 +593,16 @@ const ModulesCarousel = () => {
     const container = containerRef.current;
     if (!container) return;
     pauseAutoPlay();
-    container.scrollBy({ left: -344, behavior: "smooth" });
+    const scrollAmount = window.innerWidth < 640 ? -244 : -344;
+    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
   const handleNext = () => {
     const container = containerRef.current;
     if (!container) return;
     pauseAutoPlay();
-    container.scrollBy({ left: 344, behavior: "smooth" });
+    const scrollAmount = window.innerWidth < 640 ? 244 : 344;
+    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -660,19 +675,19 @@ const ModulesCarousel = () => {
           {[...modules, ...modules].map((m, i) => (
             <div 
               key={i}
-              className="flex-shrink-0 w-[280px] sm:w-[320px] bg-night rounded-[32px] overflow-hidden border border-neon/10 glow-border hover:border-neon/40 hover:glow-shadow transition-all group"
+              className="flex-shrink-0 w-[220px] sm:w-[320px] bg-night rounded-2xl sm:rounded-[32px] overflow-hidden border border-neon/10 glow-border hover:border-neon/40 hover:glow-shadow transition-all group"
             >
-              <div className="h-48 relative overflow-hidden">
+              <div className="h-32 sm:h-48 relative overflow-hidden">
                  <img src={m.img} alt={m.title} referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
                  <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" />
-                 <div className="absolute top-4 left-4 w-10 h-10 bg-neon/20 backdrop-blur-md rounded-xl flex items-center justify-center text-neon border border-neon/30">
+                 <div className="absolute top-3 left-3 sm:top-4 sm:left-4 w-8 h-8 sm:w-10 sm:h-10 bg-neon/20 backdrop-blur-md rounded-lg sm:rounded-xl flex items-center justify-center text-neon border border-neon/30 scale-90 sm:scale-100">
                     {m.icon}
                  </div>
               </div>
-              <div className="p-8">
-                <span className="text-[10px] font-black text-neon uppercase tracking-[0.2em] mb-2 block opacity-70">Módulo {m.id}</span>
-                <h3 className="text-xl font-bold text-white break-words whitespace-normal leading-tight mb-3 italic tracking-tight">{m.title}</h3>
-                <p className="text-sm text-metallic whitespace-normal leading-relaxed">{m.desc}</p>
+              <div className="p-4 sm:p-8">
+                <span className="text-[9px] sm:text-[10px] font-black text-neon uppercase tracking-[0.2em] mb-1.5 sm:mb-2 block opacity-70">Módulo {m.id}</span>
+                <h3 className="text-base sm:text-xl font-bold text-white break-words whitespace-normal leading-tight mb-1.5 sm:mb-3 italic tracking-tight">{m.title}</h3>
+                <p className="text-xs sm:text-sm text-metallic whitespace-normal leading-relaxed">{m.desc}</p>
               </div>
             </div>
           ))}
@@ -726,91 +741,129 @@ const Authority = () => (
   </section>
 );
 
-const Guarantee = () => (
-  <section className="py-20 text-center">
-    <div className="max-w-4xl mx-auto px-8">
-      <div className="bg-night border border-[#0A192F] p-8 md:p-12 rounded-[40px] flex flex-col md:flex-row items-center gap-8 md:gap-16">
-        <div className="flex-shrink-0 grid grid-cols-2 gap-3 w-full lg:w-auto">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3 border border-neon/20 p-4 rounded-xl">
-            <ShieldCheck className="text-neon w-8 h-8 sm:w-6 sm:h-6" />
-            <div className="leading-tight">
-              <p className="text-white font-black text-[10px] sm:text-xs uppercase">7 DIAS</p>
-              <p className="text-[8px] uppercase tracking-widest text-metallic">Garantia Total</p>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3 border border-neon/20 p-4 rounded-xl">
-            <Zap className="text-neon w-8 h-8 sm:w-6 sm:h-6" />
-            <div className="leading-tight">
-              <p className="text-white font-black text-[10px] sm:text-xs uppercase">ACESSO</p>
-              <p className="text-[8px] uppercase tracking-widest text-metallic">Imediato</p>
-            </div>
-          </div>
-        </div>
-        <div className="text-center md:text-left">
-          <h2 className="text-xl sm:text-2xl font-black uppercase italic mb-2 sm:mb-3">Satisfação Garantida</h2>
-          <p className="text-metallic leading-relaxed text-sm md:text-base">
-            Entre no curso, assista as aulas, participe do grupo. Se em 7 dias você achar que o método não é para você, basta um clique para receber 100% do seu investimento de volta.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 const Pricing = () => {
     return (
-        <section className="py-24 relative overflow-hidden" id="pricing">
-            <div className="max-w-7xl mx-auto px-8 text-center">
-                <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-10 sm:mb-16">O Próximo Nível <br className="hidden sm:block" /> <span className="text-neon drop-shadow-[0_0_20px_rgba(165,242,255,0.4)]">Começa Aqui</span></h2>
+        <section className="py-12 sm:py-24 relative overflow-hidden" id="pricing">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
+                <h2 className="text-2xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 sm:mb-16">ACESSO VITALÍCIO <br className="hidden sm:block" /> <span className="text-neon drop-shadow-[0_0_20px_rgba(165,242,255,0.4)]">AO MÉTODO</span></h2>
                 
-                <div className="max-w-xl mx-auto bg-black-pure border-[1px] border-neon pb-10 sm:pb-12 rounded-[32px] sm:rounded-[40px] relative glow-shadow overflow-hidden">
-                    <div className="bg-neon text-black py-3 sm:py-4 font-black text-[10px] sm:text-sm uppercase tracking-[0.2em] mb-8 sm:mb-12">
+                <div className="max-w-xl mx-auto bg-black-pure border-[1px] border-neon pb-6 sm:pb-12 rounded-3xl sm:rounded-[40px] relative glow-shadow overflow-hidden">
+                    <div className="bg-neon text-black py-2.5 sm:py-4 font-black text-[10px] sm:text-sm uppercase tracking-[0.2em] mb-6 sm:mb-12">
                       Oferta por Tempo Limitado
                     </div>
                     
-                    <div className="px-6 sm:px-12">
-                        <p className="text-metallic line-through text-base sm:text-lg opacity-50">De R$ 997,00</p>
-                        <p className="text-[8px] sm:text-[10px] text-neon font-black uppercase tracking-[0.3em] mt-3 sm:mt-4 mb-2">Por apenas</p>
-                        <div className="flex items-center justify-center gap-1 font-display">
-                            <span className="text-xl sm:text-2xl mt-3 sm:mt-4 font-bold text-white">12x R$</span>
-                            <span className="text-6xl sm:text-8xl font-black text-white tracking-tighter">40</span>
-                            <span className="text-xl sm:text-2xl mt-3 sm:mt-4 font-bold text-white">,34</span>
+                    <div className="px-4 sm:px-12">
+                        {/* Urgência ética */}
+                        <div className="mb-4 sm:mb-6 bg-red-500/10 border border-red-500/20 py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-center">
+                            <p className="text-[9px] sm:text-xs text-red-400 font-bold leading-relaxed">
+                                ⏳ LOTE PROMOCIONAL POR TEMPO LIMITADO. Ao encerrar o cronômetro, o valor volta ao preço padrão.
+                            </p>
                         </div>
-                        <p className="text-metallic mt-3 sm:mt-4 text-sm sm:text-base font-bold">ou R$ 390,00 à vista</p>
 
-                        <div className="my-8 sm:my-10 h-[1px] bg-[#0A192F] w-full" />
+                        <p className="text-metallic line-through text-sm sm:text-lg opacity-50">De R$ 997,00</p>
+                        <p className="text-[8px] sm:text-[10px] text-white font-black uppercase tracking-[0.3em] mt-2 sm:mt-4 mb-1 sm:mb-2">Por apenas</p>
+                        <div className="flex items-center justify-center gap-0.5 sm:get-1 font-display">
+                            <span className="text-lg sm:text-2xl mt-1.5 sm:mt-4 font-bold text-white">12x R$</span>
+                            <span className="text-5xl sm:text-8xl font-black text-white tracking-tighter">40</span>
+                            <span className="text-lg sm:text-2xl mt-1.5 sm:mt-4 font-bold text-white">,34</span>
+                        </div>
+                        <p className="text-metallic mt-2 sm:mt-4 text-xs sm:text-base font-bold">
+                            ou R$ 390,00 à vista <span className="text-green-500 font-black tracking-wide">(economize R$ 94,00)</span>
+                        </p>
 
-                        <ul className="text-left space-y-4 sm:space-y-5 mb-10 sm:mb-12">
-                            <li className="flex items-center gap-3 sm:gap-4">
-                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30 flex-shrink-0">
-                                <CheckCircle size={12} className="text-neon" />
+                        {/* Prova e confiança ao lado do preço */}
+                        <div className="mt-4 sm:mt-5 grid grid-cols-1 gap-2 sm:gap-2.5 bg-green-950/20 border border-green-500/10 p-2.5 sm:p-4 rounded-xl text-left max-w-sm mx-auto">
+                            <div className="flex items-start gap-1.5 sm:gap-2">
+                                <Users size={12} className="text-green-500 mt-0.5 flex-shrink-0 sm:hidden" />
+                                <Users size={14} className="text-green-500 mt-0.5 flex-shrink-0 hidden sm:block" />
+                                <span className="text-[10px] sm:text-xs text-white/95 font-bold leading-none">+1.500 alunos ativos</span>
+                            </div>
+                            <div className="flex items-start gap-1.5 sm:gap-2">
+                                <CheckCircle size={12} className="text-green-500 mt-0.5 flex-shrink-0 sm:hidden" />
+                                <CheckCircle size={14} className="text-green-500 mt-0.5 flex-shrink-0 hidden sm:block" />
+                                <span className="text-[10px] sm:text-xs text-white/90 font-medium leading-tight">Conteúdo validado na prática (YouTube e plataformas de streaming)</span>
+                            </div>
+                            <div className="flex items-start gap-1.5 sm:gap-2">
+                                <ShieldCheck size={12} className="text-green-500 mt-0.5 flex-shrink-0 sm:hidden" />
+                                <ShieldCheck size={14} className="text-green-500 mt-0.5 flex-shrink-0 hidden sm:block" />
+                                <span className="text-[10px] sm:text-xs text-white/90 font-medium leading-none">Depoimentos verídicos e verificados</span>
+                            </div>
+                        </div>
+
+                        <div className="my-5 sm:my-10 h-[1px] bg-[#0A192F] w-full" />
+
+                        <ul className="text-left space-y-2.5 sm:space-y-5 mb-6 sm:mb-12">
+                            <li className="flex items-center gap-2.5 sm:gap-4">
+                              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/30 flex-shrink-0">
+                                <CheckCircle size={10} className="text-green-500 sm:hidden" />
+                                <CheckCircle size={12} className="text-green-500 hidden sm:block" />
                               </div>
-                              <span className="text-xs sm:text-sm font-bold text-white/80 uppercase tracking-wide">Acesso Vitalício ao Método</span>
+                              <span className="text-[11px] sm:text-sm font-bold text-white uppercase tracking-wide">Acesso Vitalício ao Método</span>
                             </li>
-                            <li className="flex items-center gap-3 sm:gap-4">
-                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30 flex-shrink-0">
-                                <CheckCircle size={12} className="text-neon" />
+                            <li className="flex items-center gap-2.5 sm:gap-4">
+                              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/30 flex-shrink-0">
+                                <CheckCircle size={10} className="text-green-500 sm:hidden" />
+                                <CheckCircle size={12} className="text-green-500 hidden sm:block" />
                               </div>
-                              <span className="text-xs sm:text-sm font-bold text-white/80 uppercase tracking-wide">10 Módulos Completos (IA + Técnica)</span>
+                              <span className="text-[11px] sm:text-sm font-bold text-white uppercase tracking-wide">10 Módulos Completos (IA + Técnica)</span>
                             </li>
-                            <li className="flex items-center gap-3 sm:gap-4">
-                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30 flex-shrink-0">
-                                <CheckCircle size={12} className="text-neon" />
+                            <li className="flex items-center gap-2.5 sm:gap-4">
+                              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/30 flex-shrink-0">
+                                <CheckCircle size={10} className="text-green-500 sm:hidden" />
+                                <CheckCircle size={12} className="text-green-500 hidden sm:block" />
                               </div>
-                              <span className="text-xs sm:text-sm font-bold text-white/80 uppercase tracking-wide">Grupo Exclusivo no WhatsApp</span>
+                              <span className="text-[11px] sm:text-sm font-bold text-white uppercase tracking-wide">+ Aulas bônus</span>
+                            </li>
+                            <li className="flex items-center gap-2.5 sm:gap-4">
+                              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/30 flex-shrink-0">
+                                <CheckCircle size={10} className="text-green-500 sm:hidden" />
+                                <CheckCircle size={12} className="text-green-500 hidden sm:block" />
+                              </div>
+                              <span className="text-[11px] sm:text-sm font-bold text-white uppercase tracking-wide">+ Grupo Exclusivo no WhatsApp</span>
                             </li>
                         </ul>
 
                         <motion.a 
-                            whileHover={{ scale: 1.02 }}
+                            whileHover={{ scale: 1.02, boxShadow: "0 15px 40px rgba(34,197,94,0.5)" }}
                             whileTap={{ scale: 0.98 }}
+                            animate={{ 
+                                boxShadow: ["0 10px 30px rgba(34,197,94,0.3)", "0 15px 40px rgba(34,197,94,0.6)", "0 10px 30px rgba(34,197,94,0.3)"]
+                            }}
+                            transition={{ 
+                                duration: 0.3,
+                                boxShadow: { repeat: Infinity, duration: 2 }
+                            }}
                             href="https://pay.kiwify.com.br/nIxnMML"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block w-full bg-neon text-black py-4 sm:py-6 rounded-2xl font-black text-lg sm:text-xl shadow-[0_10px_30px_rgba(165,242,255,0.3)] transition-all uppercase tracking-tighter"
+                            className="relative block w-full bg-green-500 hover:bg-green-400 text-black py-3 sm:py-6 rounded-2xl font-black text-base sm:text-xl transition-colors uppercase tracking-tighter overflow-hidden group"
                         >
-                            Garantir Minha Vaga
+                            <span className="relative z-10 flex items-center justify-center gap-2">
+                                Garantir Minha Vaga
+                                <motion.span 
+                                    animate={{ x: [0, 5, 0] }} 
+                                    transition={{ repeat: Infinity, duration: 1.5 }}
+                                >
+                                    →
+                                </motion.span>
+                            </span>
+                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_3s_infinite] z-0"></div>
                         </motion.a>
+
+                        {/* Garantia (bloco visual curto) */}
+                        <div className="mt-6 sm:mt-8 p-4 sm:p-5 bg-green-500/[0.04] border border-[#00ff66]/15 rounded-2xl flex items-start gap-3 sm:gap-4 text-left max-w-md mx-auto shadow-[inset_0_1px_15px_rgba(34,197,94,0.02)]">
+                            <ShieldCheck className="text-green-500 w-6 h-6 sm:w-10 sm:h-10 flex-shrink-0 mt-0.5" />
+                            <div className="leading-tight">
+                                <p className="text-[11px] sm:text-sm font-black uppercase text-white tracking-wider flex items-center gap-1.5">
+                                    <span>Garantia de 7 Dias</span>
+                                    <span className="text-[8px] sm:text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-1.5 py-0.5 rounded font-black uppercase tracking-widest">Seguro</span>
+                                </p>
+                                <p className="text-[9px] sm:text-xs text-white/70 font-medium mt-1 leading-relaxed">
+                                    Teste por 7 dias. Se não for para você, devolvemos 100% do valor. Sem burocracia.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -886,7 +939,6 @@ export default function App() {
       
       {/* 6 - 'o próximo nivel começa aqui" */}
       <Reveal><Pricing /></Reveal>
-      <Reveal><Guarantee /></Reveal>
       
       {/* 7 - FAQ */}
       <Reveal><FAQ /></Reveal>
