@@ -159,12 +159,12 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="relative aspect-video w-full max-w-4xl bg-black rounded-2xl border border-neon/20 overflow-hidden group shadow-[0_0_50px_rgba(165,242,255,0.25)]"
         >
-          {/* Perfect pixel-based crop to hide Google Drive UI while preserving exact 16:9 video aspect ratio on mobile */}
+          {/* Scale technique to hide Google Drive UI while preserving exact 16:9 video aspect ratio on all devices */}
           <div className="absolute inset-0 bg-black pointer-events-auto">
             <iframe 
               src="https://drive.google.com/file/d/1_c35SXY4zowZBHM1UOsziKU0LPQi0qMa/preview" 
               title="Apresentação do Método" 
-              className="absolute w-full h-[calc(100%+120px)] -top-[60px] left-0 border-0 pointer-events-auto"
+              className="absolute w-full h-[300%] -top-full left-0 border-0 pointer-events-auto"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
