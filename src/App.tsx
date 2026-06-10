@@ -85,22 +85,23 @@ const CountdownBanner = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-black-pure/95 border-b border-red-500/30 backdrop-blur-md py-3.5 px-6 sm:px-12 md:px-16 lg:px-20 shadow-[0_4px_30px_rgba(239,68,68,0.15)] flex flex-col md:flex-row items-center justify-between gap-3 text-center relative">
-      <div className="flex items-center gap-2 text-white font-black uppercase text-xs tracking-wider">
-        <span className="relative flex h-2.5 w-2.5">
+    <div className="fixed top-0 left-0 w-full z-50 bg-black-pure/95 border-b border-red-500/30 backdrop-blur-md py-2 px-4 shadow-[0_4px_30px_rgba(239,68,68,0.15)] flex flex-row items-center justify-between text-center relative pointer-events-auto">
+      <div className="flex items-center gap-1.5 text-white font-black uppercase text-[9px] sm:text-[10px] tracking-wider text-left">
+        <span className="relative flex h-2 w-2 flex-shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
         </span>
-        <span>Atenção: Acesso Promocional Expirando</span>
+        <span className="leading-tight sm:hidden max-w-[120px]">Acesso Expirando</span>
+        <span className="leading-tight hidden sm:block">Atenção: Acesso Promocional Expirando</span>
       </div>
       
-      <p className="text-[11px] sm:text-xs text-metallic font-semibold max-w-xl hidden sm:block md:absolute md:left-1/2 md:-translate-x-1/2">
+      <p className="text-[11px] sm:text-xs text-metallic font-semibold max-w-xl hidden md:block absolute left-1/2 -translate-x-1/2 w-max">
         Últimas vagas com desconto — confirme antes do tempo acabar.
       </p>
 
-      <div className="flex items-center gap-2 bg-red-950/40 border border-red-500/40 px-3 py-1.5 rounded-xl shadow-[0_0_15px_rgba(239,68,68,0.1)] ml-auto md:ml-0">
-        <span className="text-[9px] font-black uppercase tracking-widest text-red-400">Tempo restante:</span>
-        <span className="font-mono text-sm font-black text-red-500">{formatTime(timeLeft)}</span>
+      <div className="flex items-center gap-1.5 bg-red-950/40 border border-red-500/40 px-2.5 py-1.5 rounded-lg shadow-[0_0_15px_rgba(239,68,68,0.1)]">
+        <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-red-400 flex-shrink-0">Restam:</span>
+        <span className="font-mono text-xs sm:text-sm font-black text-red-500 flex-shrink-0">{formatTime(timeLeft)}</span>
       </div>
     </div>
   );
@@ -145,7 +146,7 @@ const Hero = () => {
           <span className="px-3 py-1 bg-night text-neon text-[10px] font-bold uppercase tracking-widest border border-neon/30 rounded-full inline-block">
             Validado no YouTube • 50k/Mês Orgânico
           </span>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-[1.2] uppercase tracking-tighter">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-[1.1] md:leading-[1.2] uppercase tracking-tighter max-w-4xl mx-auto">
             O JEITO CERTO PARA <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.6)]">Viver de Música</span> <br />
             USANDO IA NAS PLATAFORMAS DIGITAIS
           </h1>
@@ -158,19 +159,15 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="relative aspect-video w-full max-w-4xl bg-black rounded-2xl border border-neon/20 overflow-hidden group shadow-[0_0_50px_rgba(165,242,255,0.25)]"
         >
-          {/* Always load the iframe directly so the video's first frame is loaded, bypassing any initial black screen */}
-          <div className="absolute inset-0 overflow-hidden bg-black pointer-events-auto">
+          {/* Perfect pixel-based crop to hide Google Drive UI while preserving exact 16:9 video aspect ratio on mobile */}
+          <div className="absolute inset-0 bg-black pointer-events-auto">
             <iframe 
-              width="100%" 
-              height="100%" 
               src="https://drive.google.com/file/d/1_c35SXY4zowZBHM1UOsziKU0LPQi0qMa/preview" 
               title="Apresentação do Método" 
-              className="absolute w-full h-[132%] -top-[16%] left-0 border-0 pointer-events-auto"
+              className="absolute w-full h-[calc(100%+120px)] -top-[60px] left-0 border-0 pointer-events-auto"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            {/* Absolute bottom mask to block and hide Google Drive controls bar completely */}
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-black z-10 pointer-events-none cursor-default border-t border-white/[0.02]" />
           </div>
 
           {/* User-friendly unmute instructions overlay banner (pointer-events-none so click passes through to Google's play button) */}
@@ -220,7 +217,7 @@ const Hero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             href="#pricing"
-            className="w-full bg-neon text-black font-black py-5 px-12 rounded-lg shadow-[0_0_25px_rgba(165,242,255,0.4)] hover:shadow-[0_0_40px_rgba(165,242,255,0.6)] transition-all uppercase tracking-tighter text-center text-lg inline-block"
+            className="w-full bg-neon text-black font-black py-4 sm:py-5 px-6 sm:px-12 rounded-lg shadow-[0_0_25px_rgba(165,242,255,0.4)] hover:shadow-[0_0_40px_rgba(165,242,255,0.6)] transition-all uppercase tracking-tighter text-center text-base sm:text-lg inline-block"
           >
             Quero meu acesso agora
           </motion.a>
@@ -282,12 +279,12 @@ const SocialProof = () => {
   return (
     <section id="testimonials" className="py-20 bg-night/30 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <p className="text-neon font-black tracking-[0.25em] text-xs sm:text-sm mb-4">CONTEÚDO VALIDADO POR RESULTADOS</p>
+        <div className="text-center mb-10 sm:mb-16">
+          <p className="text-neon font-black tracking-[0.25em] text-[10px] sm:text-xs mb-3 sm:mb-4">CONTEÚDO VALIDADO POR RESULTADOS</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black leading-tight uppercase tracking-tighter">
             Quem aplica, <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.4)]">Monetiza!</span>
           </h2>
-          <p className="text-metallic mt-4 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-metallic mt-3 sm:mt-4 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
             Veja depoimentos reais direto do nosso grupo de alunos no WhatsApp mostrando seus canais monetizados.
           </p>
         </div>
@@ -303,8 +300,8 @@ const SocialProof = () => {
               onClick={() => setSelectedImgId(t.imgId)}
               className="bg-night/50 rounded-[32px] border border-neon/10 hover:border-neon/30 transition-all overflow-hidden flex flex-col cursor-pointer group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(165,242,255,0.15)] relative h-full"
             >
-              {/* Image Container with aspect ratio and absolute centering */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden flex items-start justify-center bg-black/40">
+            <div className="w-full h-full relative overflow-hidden flex items-start justify-center bg-black/40">
+              <div className="relative aspect-[3/4] w-full max-w-[280px] sm:max-w-full">
                 <img 
                   src={`https://lh3.googleusercontent.com/d/${t.imgId}`} 
                   alt={`Depoimento de ${t.name}`}
@@ -317,12 +314,13 @@ const SocialProof = () => {
                 
                 {/* Hover overlay with conversion-focused CTA */}
                 <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-neon text-black flex items-center justify-center shadow-[0_0_20px_#A5F2FF] transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                    <Plus size={24} />
+                  <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-neon text-black flex items-center justify-center shadow-[0_0_20px_#A5F2FF] transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <Plus size={20} className="sm:w-6 sm:h-6" />
                   </div>
-                  <span className="text-xs font-black uppercase tracking-widest text-neon">Clique para ampliar</span>
+                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-neon">Clique para ampliar</span>
                 </div>
               </div>
+            </div>
             </motion.div>
           ))}
         </div>
@@ -388,7 +386,7 @@ const PainSolution = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-6 sm:mb-8 text-center md:text-left">
               Cansado de ser apenas mais um no <span className="text-neon">oceano digital?</span>
             </h2>
             <div className="space-y-6">
@@ -407,9 +405,9 @@ const PainSolution = () => {
           </div>
           <div className="bg-neon/10 p-10 rounded-[40px] border border-neon/20 relative overflow-hidden">
             <div className="relative z-10">
-              <Zap className="text-neon mb-6" size={48} />
-              <h3 className="text-3xl font-display font-bold mb-4">A Ponte para o Sucesso</h3>
-              <p className="text-lg text-white/80 leading-relaxed mb-6">
+              <Zap className="text-neon mb-4 sm:mb-6 mx-auto md:mx-0 w-10 sm:w-12 h-10 sm:h-12" />
+              <h3 className="text-2xl sm:text-3xl font-display font-bold mb-4 text-center md:text-left">A Ponte para o Sucesso</h3>
+              <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6 text-center md:text-left">
                 O <strong>Método Impulso Musical</strong> foi desenhado para ser a ponte definitiva entre o amadorismo e o mercado profissional.
               </p>
               <ul className="space-y-4">
@@ -662,7 +660,7 @@ const ModulesCarousel = () => {
           {[...modules, ...modules].map((m, i) => (
             <div 
               key={i}
-              className="flex-shrink-0 w-[320px] bg-night rounded-[32px] overflow-hidden border border-neon/10 glow-border hover:border-neon/40 hover:glow-shadow transition-all group"
+              className="flex-shrink-0 w-[280px] sm:w-[320px] bg-night rounded-[32px] overflow-hidden border border-neon/10 glow-border hover:border-neon/40 hover:glow-shadow transition-all group"
             >
               <div className="h-48 relative overflow-hidden">
                  <img src={m.img} alt={m.title} referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
@@ -691,11 +689,11 @@ const ModulesCarousel = () => {
 const Authority = () => (
   <section className="py-24 bg-gradient-to-b from-black-pure to-night/30">
     <div className="max-w-7xl mx-auto px-8">
-      <div className="grid md:grid-cols-[1fr_1.2fr] gap-16 items-center">
+        <div className="grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-center">
         <div className="flex justify-center md:justify-start">
-          <div className="relative group">
-            <div className="absolute inset-0 bg-neon/10 blur-[80px] rounded-full group-hover:bg-neon/20 transition-all" />
-            <div className="relative z-10 w-full max-w-sm aspect-square rounded-[2rem] overflow-hidden border border-neon/20 p-2 bg-night/20 backdrop-blur-sm">
+          <div className="relative group w-full max-w-[280px] sm:max-w-sm md:max-w-md">
+            <div className="absolute inset-0 bg-neon/10 blur-[60px] md:blur-[80px] rounded-full group-hover:bg-neon/20 transition-all" />
+            <div className="relative z-10 w-full aspect-square rounded-[2rem] overflow-hidden border border-neon/20 p-2 bg-night/20 backdrop-blur-sm">
                 <img 
                    src="https://lh3.googleusercontent.com/d/1WWuhz3FzpQEHpGECsJ0gKIO2syz4Ut1N" 
                    alt="Milton Tucunduva" 
@@ -704,22 +702,22 @@ const Authority = () => (
             </div>
           </div>
         </div>
-        <div className="space-y-8">
-          <h2 className="text-sm font-bold text-white uppercase tracking-[0.3em] flex items-center">
-            <span className="w-8 h-[1px] bg-neon mr-4"></span> Conheça seu professor
+        <div className="space-y-6 md:space-y-8 text-center md:text-left">
+          <h2 className="text-[10px] sm:text-sm font-bold text-white uppercase tracking-[0.3em] flex items-center justify-center md:justify-start">
+            <span className="w-6 sm:w-8 h-[1px] bg-neon mr-3 sm:mr-4"></span> Conheça seu professor
           </h2>
-          <h3 className="text-4xl md:text-6xl font-black text-white italic uppercase leading-none">Milton Tucunduva</h3>
-          <p className="text-metallic text-lg leading-relaxed max-w-2xl">
+          <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-white italic uppercase leading-[1.1]">Milton Tucunduva</h3>
+          <p className="text-metallic text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0">
             Como especialista em criação de projetos de música com IA, eu vou muito além de apenas te dar o passo a passo; eu te faço aprender a ter autonomia e criar um PROJETO DE SUCESSO! Com faturamento alto em várias plataformas digitais no nicho de música, eu te ensino exatamente o que aplico em meus projetos. Já ajudei milhares de alunos a saírem do completo zero para construírem projetos profissionais, validados no mercado digital e faturando alto.
           </p>
-          <div className="grid grid-cols-2 gap-8 py-8 border-y border-[#0A192F]">
+          <div className="grid grid-cols-2 gap-4 sm:gap-8 py-6 sm:py-8 border-y border-[#0A192F]">
              <div>
-                <p className="text-2xl sm:text-3xl font-black text-white tracking-tighter">+ R$ 50.000,00</p>
-                <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">FATURAMENTO MENSAL</p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tighter">+ R$ 50.000,00</p>
+                <p className="text-[8px] sm:text-[10px] text-neon font-black uppercase tracking-widest mt-1">FATURAMENTO MENSAL</p>
              </div>
              <div>
-                <p className="text-2xl sm:text-3xl font-black text-white tracking-tighter">+ 1.500</p>
-                <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">ALUNOS ATIVOS</p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tighter">+ 1.500</p>
+                <p className="text-[8px] sm:text-[10px] text-neon font-black uppercase tracking-widest mt-1">ALUNOS ATIVOS</p>
              </div>
           </div>
         </div>
@@ -732,24 +730,24 @@ const Guarantee = () => (
   <section className="py-20 text-center">
     <div className="max-w-4xl mx-auto px-8">
       <div className="bg-night border border-[#0A192F] p-8 md:p-12 rounded-[40px] flex flex-col md:flex-row items-center gap-8 md:gap-16">
-        <div className="flex-shrink-0 grid grid-cols-2 gap-3 w-full md:w-auto">
-          <div className="flex items-center space-x-2 border border-neon/20 p-4 rounded-xl">
-            <ShieldCheck className="text-neon" size={24} />
-            <div className="text-left leading-none">
-              <p className="text-white font-black text-xs uppercase">7 DIAS</p>
+        <div className="flex-shrink-0 grid grid-cols-2 gap-3 w-full lg:w-auto">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3 border border-neon/20 p-4 rounded-xl">
+            <ShieldCheck className="text-neon w-8 h-8 sm:w-6 sm:h-6" />
+            <div className="leading-tight">
+              <p className="text-white font-black text-[10px] sm:text-xs uppercase">7 DIAS</p>
               <p className="text-[8px] uppercase tracking-widest text-metallic">Garantia Total</p>
             </div>
           </div>
-          <div className="flex items-center space-x-2 border border-neon/20 p-4 rounded-xl">
-            <Zap className="text-neon" size={24} />
-            <div className="text-left leading-none">
-              <p className="text-white font-black text-xs uppercase">ACESSO</p>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3 border border-neon/20 p-4 rounded-xl">
+            <Zap className="text-neon w-8 h-8 sm:w-6 sm:h-6" />
+            <div className="leading-tight">
+              <p className="text-white font-black text-[10px] sm:text-xs uppercase">ACESSO</p>
               <p className="text-[8px] uppercase tracking-widest text-metallic">Imediato</p>
             </div>
           </div>
         </div>
-        <div className="text-left">
-          <h2 className="text-2xl font-black uppercase italic mb-3">Satisfação Garantida</h2>
+        <div className="text-center md:text-left">
+          <h2 className="text-xl sm:text-2xl font-black uppercase italic mb-2 sm:mb-3">Satisfação Garantida</h2>
           <p className="text-metallic leading-relaxed text-sm md:text-base">
             Entre no curso, assista as aulas, participe do grupo. Se em 7 dias você achar que o método não é para você, basta um clique para receber 100% do seu investimento de volta.
           </p>
@@ -763,43 +761,43 @@ const Pricing = () => {
     return (
         <section className="py-24 relative overflow-hidden" id="pricing">
             <div className="max-w-7xl mx-auto px-8 text-center">
-                <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16">O Próximo Nível <br /> <span className="text-neon drop-shadow-[0_0_20px_rgba(165,242,255,0.4)]">Começa Aqui</span></h2>
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-10 sm:mb-16">O Próximo Nível <br className="hidden sm:block" /> <span className="text-neon drop-shadow-[0_0_20px_rgba(165,242,255,0.4)]">Começa Aqui</span></h2>
                 
-                <div className="max-w-xl mx-auto bg-black-pure border-[1px] border-neon pb-12 rounded-[40px] relative glow-shadow overflow-hidden">
-                    <div className="bg-neon text-black py-4 font-black text-sm uppercase tracking-[0.2em] mb-12">
+                <div className="max-w-xl mx-auto bg-black-pure border-[1px] border-neon pb-10 sm:pb-12 rounded-[32px] sm:rounded-[40px] relative glow-shadow overflow-hidden">
+                    <div className="bg-neon text-black py-3 sm:py-4 font-black text-[10px] sm:text-sm uppercase tracking-[0.2em] mb-8 sm:mb-12">
                       Oferta por Tempo Limitado
                     </div>
                     
-                    <div className="px-12">
-                        <p className="text-metallic line-through text-lg opacity-50">De R$ 997,00</p>
-                        <p className="text-[10px] text-neon font-black uppercase tracking-[0.3em] mt-4 mb-2">Por apenas</p>
+                    <div className="px-6 sm:px-12">
+                        <p className="text-metallic line-through text-base sm:text-lg opacity-50">De R$ 997,00</p>
+                        <p className="text-[8px] sm:text-[10px] text-neon font-black uppercase tracking-[0.3em] mt-3 sm:mt-4 mb-2">Por apenas</p>
                         <div className="flex items-center justify-center gap-1 font-display">
-                            <span className="text-2xl mt-4 font-bold text-white">12x R$</span>
-                            <span className="text-8xl font-black text-white tracking-tighter">40</span>
-                            <span className="text-2xl mt-4 font-bold text-white">,34</span>
+                            <span className="text-xl sm:text-2xl mt-3 sm:mt-4 font-bold text-white">12x R$</span>
+                            <span className="text-6xl sm:text-8xl font-black text-white tracking-tighter">40</span>
+                            <span className="text-xl sm:text-2xl mt-3 sm:mt-4 font-bold text-white">,34</span>
                         </div>
-                        <p className="text-metallic mt-4 font-bold">ou R$ 390,00 à vista</p>
+                        <p className="text-metallic mt-3 sm:mt-4 text-sm sm:text-base font-bold">ou R$ 390,00 à vista</p>
 
-                        <div className="my-10 h-[1px] bg-[#0A192F] w-full" />
+                        <div className="my-8 sm:my-10 h-[1px] bg-[#0A192F] w-full" />
 
-                        <ul className="text-left space-y-5 mb-12">
-                            <li className="flex items-center gap-4">
-                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30">
+                        <ul className="text-left space-y-4 sm:space-y-5 mb-10 sm:mb-12">
+                            <li className="flex items-center gap-3 sm:gap-4">
+                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30 flex-shrink-0">
                                 <CheckCircle size={12} className="text-neon" />
                               </div>
-                              <span className="text-sm font-bold text-white/80 uppercase tracking-wide">Acesso Vitalício ao Método</span>
+                              <span className="text-xs sm:text-sm font-bold text-white/80 uppercase tracking-wide">Acesso Vitalício ao Método</span>
                             </li>
-                            <li className="flex items-center gap-4">
-                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30">
+                            <li className="flex items-center gap-3 sm:gap-4">
+                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30 flex-shrink-0">
                                 <CheckCircle size={12} className="text-neon" />
                               </div>
-                              <span className="text-sm font-bold text-white/80 uppercase tracking-wide">10 Módulos Completos (IA + Técnica)</span>
+                              <span className="text-xs sm:text-sm font-bold text-white/80 uppercase tracking-wide">10 Módulos Completos (IA + Técnica)</span>
                             </li>
-                            <li className="flex items-center gap-4">
-                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30">
+                            <li className="flex items-center gap-3 sm:gap-4">
+                              <div className="w-5 h-5 rounded-full bg-neon/10 flex items-center justify-center border border-neon/30 flex-shrink-0">
                                 <CheckCircle size={12} className="text-neon" />
                               </div>
-                              <span className="text-sm font-bold text-white/80 uppercase tracking-wide">Grupo Exclusivo no WhatsApp</span>
+                              <span className="text-xs sm:text-sm font-bold text-white/80 uppercase tracking-wide">Grupo Exclusivo no WhatsApp</span>
                             </li>
                         </ul>
 
@@ -809,7 +807,7 @@ const Pricing = () => {
                             href="https://pay.kiwify.com.br/nIxnMML"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block w-full bg-neon text-black py-6 rounded-2xl font-black text-xl shadow-[0_10px_30px_rgba(165,242,255,0.3)] transition-all uppercase tracking-tighter"
+                            className="block w-full bg-neon text-black py-4 sm:py-6 rounded-2xl font-black text-lg sm:text-xl shadow-[0_10px_30px_rgba(165,242,255,0.3)] transition-all uppercase tracking-tighter"
                         >
                             Garantir Minha Vaga
                         </motion.a>
@@ -833,15 +831,15 @@ const FAQ = () => {
   return (
     <section className="py-20 bg-night/10">
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-4xl font-display font-bold text-center mb-12">Perguntas <span className="text-neon">Frequentes</span></h2>
-        <div className="space-y-4">
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-center mb-10 sm:mb-12">Perguntas <span className="text-neon">Frequentes</span></h2>
+        <div className="space-y-3 sm:space-y-4">
           {questions.map((item, i) => (
             <div key={i} className="bg-night/50 border border-neon/10 rounded-2xl overflow-hidden transition-all">
               <button 
                 onClick={() => setActive(active === i ? null : i)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-neon/5 transition-colors"
+                className="w-full flex items-center justify-between p-4 sm:p-6 text-left hover:bg-neon/5 transition-colors"
               >
-                <span className="font-bold text-lg">{item.q}</span>
+                <span className="font-bold text-base sm:text-lg pr-4">{item.q}</span>
                 {active === i ? <ChevronUp size={20} className="text-neon" /> : <ChevronDown size={20} className="text-metallic" />}
               </button>
               <AnimatePresence>
