@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { 
   Play, 
   CheckCircle, 
@@ -18,6 +18,8 @@ import {
   MessageSquare, 
   ChevronDown, 
   ChevronUp, 
+  ChevronLeft,
+  ChevronRight,
   Star,
   Music,
   Zap,
@@ -26,7 +28,9 @@ import {
   Globe,
   Lock,
   Gift,
-  Plus
+  Plus,
+  X,
+  Image as ImageIcon
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 
@@ -45,155 +49,329 @@ const Reveal = ({ children }: { children: React.ReactNode }) => (
 
 // --- Components ---
 
-const Navbar = () => (
-  <nav className="fixed top-0 left-0 w-full z-50 bg-black-pure/90 border-b border-[#0A192F] backdrop-blur-md">
-    <div className="max-w-7xl mx-auto px-8 h-20 grid grid-cols-3 items-center">
-      {/* Left: Navigation */}
-      <nav className="hidden md:flex items-center space-x-8 text-[10px] font-bold uppercase tracking-[0.2em]">
-        <a href="#method" className="text-neon hover:opacity-80 transition-opacity">O Método</a>
-        <a href="#modules" className="hover:text-white transition-colors">Módulos</a>
-        <a href="#testimonials" className="hover:text-white transition-colors">Depoimentos</a>
-      </nav>
+const CountdownBanner = () => {
+  const [timeLeft, setTimeLeft] = useState(15 * 60);
 
-      {/* Center: Hero Logo */}
-      <div className="flex justify-center flex-1">
-        <div className="relative h-20 group cursor-pointer inline-flex items-center">
-          {/* Subtle Glow Background */}
-          <div className="absolute inset-0 bg-neon/10 blur-2xl rounded-full scale-110 group-hover:bg-neon/20 transition-all" />
-          <img 
-            src="https://lh3.googleusercontent.com/d/1owzhXUcb4cm7ZVl_xDhsHevrNkbD_y0Y" 
-            alt="Impulso Musical Logo" 
-            className="h-full w-auto relative z-10 object-contain drop-shadow-[0_0_8px_#A5F2FF]"
-          />
-        </div>
+  useEffect(() => {
+    const savedTime = sessionStorage.getItem("countdown_timer_15m");
+    if (savedTime) {
+      const remaining = parseInt(savedTime, 10);
+      if (remaining > 0) {
+        setTimeLeft(remaining);
+      }
+    } else {
+      sessionStorage.setItem("countdown_timer_15m", (15 * 60).toString());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        const next = prev - 1;
+        sessionStorage.setItem("countdown_timer_15m", next.toString());
+        return next;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  return (
+    <div className="fixed top-0 left-0 w-full z-50 bg-black-pure/95 border-b border-red-500/30 backdrop-blur-md py-3.5 px-6 sm:px-12 md:px-16 lg:px-20 shadow-[0_4px_30px_rgba(239,68,68,0.15)] flex flex-col md:flex-row items-center justify-between gap-3 text-center relative">
+      <div className="flex items-center gap-2 text-white font-black uppercase text-xs tracking-wider">
+        <span className="relative flex h-2.5 w-2.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+        </span>
+        <span>Atenção: Acesso Promocional Expirando</span>
       </div>
+      
+      <p className="text-[11px] sm:text-xs text-metallic font-semibold max-w-xl hidden sm:block md:absolute md:left-1/2 md:-translate-x-1/2">
+        Últimas vagas com desconto — confirme antes do tempo acabar.
+      </p>
 
-      {/* Right: Small CTA */}
-      <div className="hidden md:flex justify-end">
-        <a 
-          href="#pricing" 
-          className="text-[9px] font-black text-neon uppercase tracking-widest border border-neon/30 px-5 py-2 rounded-full hover:bg-neon hover:text-black transition-all hover:scale-105"
-        >
-          Acesso Imediato
-        </a>
+      <div className="flex items-center gap-2 bg-red-950/40 border border-red-500/40 px-3 py-1.5 rounded-xl shadow-[0_0_15px_rgba(239,68,68,0.1)] ml-auto md:ml-0">
+        <span className="text-[9px] font-black uppercase tracking-widest text-red-400">Tempo restante:</span>
+        <span className="font-mono text-sm font-black text-red-500">{formatTime(timeLeft)}</span>
       </div>
     </div>
-  </nav>
-);
+  );
+};
 
 const Hero = () => {
+  const [showMutePrompt, setShowMutePrompt] = useState(true);
+
+  // High-conversion trick: blur listener to auto-detect when they click the iframe
+  useEffect(() => {
+    const handleBlur = () => {
+      if (document.activeElement?.tagName === "IFRAME") {
+        setShowMutePrompt(false);
+      }
+    };
+    window.addEventListener("blur", handleBlur);
+    
+    // Periodically checks if iframe is focused in case of slow events
+    const interval = setInterval(() => {
+      if (document.activeElement?.tagName === "IFRAME") {
+        setShowMutePrompt(false);
+      }
+    }, 1000);
+
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <section className="relative pt-32 pb-20 overflow-hidden border-b border-[#0A192F]">
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
-        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center text-left">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            <span className="px-3 py-1 bg-night text-neon text-[10px] font-bold uppercase tracking-widest border border-neon/30 rounded-full inline-block">
-              Validado no YouTube • 50k/Mês Orgânico
-            </span>
-            <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] uppercase tracking-tighter">
-              O JEITO CERTO PARA <br />
-              <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.6)]">Viver de Música</span> <br />
-              USANDO IA NAS PLATAFORMAS DIGITAIS
-            </h1>
-            <p className="text-lg md:text-xl leading-relaxed text-metallic max-w-xl">
-              Saia do absoluto zero ou do estagnado e alcance resultados profissionais com o passo a passo de quem já fatura no mercado.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-6">
-              <motion.a 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="#pricing"
-                className="w-full sm:w-auto bg-neon text-black font-black py-5 px-10 rounded-lg shadow-[0_0_25px_rgba(165,242,255,0.4)] hover:shadow-[0_0_40px_rgba(165,242,255,0.6)] transition-all uppercase tracking-tighter text-center"
-              >
-                Quero meu acesso agora
-              </motion.a>
-              <div className="flex -space-x-3 items-center">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-night flex items-center justify-center">
-                    <Users size={20} className="text-neon/50" />
-                  </div>
-                ))}
-                <div className="ml-6 flex flex-col items-start leading-none">
-                  <span className="text-white font-black text-sm">+1.500 Alunos</span>
-                  <span className="text-[10px] uppercase text-metallic tracking-widest mt-1">Conteúdo validado</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+      <div className="max-w-5xl mx-auto px-8 relative z-10 text-center flex flex-col items-center space-y-12">
+        
+        {/* Header content stacked & centered */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col items-center space-y-6 max-w-3xl"
+        >
+          <span className="px-3 py-1 bg-night text-neon text-[10px] font-bold uppercase tracking-widest border border-neon/30 rounded-full inline-block">
+            Validado no YouTube • 50k/Mês Orgânico
+          </span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-[1.2] uppercase tracking-tighter">
+            O JEITO CERTO PARA <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.6)]">Viver de Música</span> <br />
+            USANDO IA NAS PLATAFORMAS DIGITAIS
+          </h1>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative aspect-video w-full bg-night rounded-2xl border border-neon/20 overflow-hidden group shadow-[0_0_50px_rgba(165,242,255,0.1)]"
-          >
+        {/* Video VSL wider and below the description */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="relative aspect-video w-full max-w-4xl bg-black rounded-2xl border border-neon/20 overflow-hidden group shadow-[0_0_50px_rgba(165,242,255,0.25)]"
+        >
+          {/* Always load the iframe directly so the video's first frame is loaded, bypassing any initial black screen */}
+          <div className="absolute inset-0 overflow-hidden bg-black pointer-events-auto">
             <iframe 
               width="100%" 
               height="100%" 
-              src="https://www.youtube.com/embed/PRgsGOfUj-4?controls=0&modestbranding=1&rel=0" 
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              src="https://drive.google.com/file/d/1_c35SXY4zowZBHM1UOsziKU0LPQi0qMa/preview" 
+              title="Apresentação do Método" 
+              className="absolute w-full h-[132%] -top-[16%] left-0 border-0 pointer-events-auto"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#222]">
-              <div className="h-full w-1/3 bg-neon shadow-[0_0_10px_#A5F2FF]"></div>
+            {/* Absolute bottom mask to block and hide Google Drive controls bar completely */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-black z-10 pointer-events-none cursor-default border-t border-white/[0.02]" />
+          </div>
+
+          {/* User-friendly unmute instructions overlay banner (pointer-events-none so click passes through to Google's play button) */}
+          <AnimatePresence>
+            {showMutePrompt && (
+              <motion.div 
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 pointer-events-none z-20 transition-all duration-500"
+              >
+                {/* Visual pulse indicator to click below or above the native Play button */}
+                <motion.div 
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                  className="px-6 py-3 bg-night text-white font-black rounded-full border border-neon/50 text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2 select-none"
+                >
+                  <span>Clique abaixo para dar Play com Som</span>
+                  <span className="animate-bounce">🔊</span>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#222] z-10">
+            <div className="h-full w-1/3 bg-neon shadow-[0_0_10px_#A5F2FF]"></div>
+          </div>
+        </motion.div>
+
+        {/* Description text placed below video and before CTA button */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.25 }}
+          className="text-base md:text-lg leading-relaxed text-metallic max-w-2xl mx-auto"
+        >
+          Saia do absoluto zero ou do estagnado e alcance resultados profissionais com o passo a passo de quem já fatura no mercado.
+        </motion.p>
+
+        {/* Call to Action and active students badge below video */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="flex flex-col items-center gap-6 w-full max-w-md"
+        >
+          <motion.a 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="#pricing"
+            className="w-full bg-neon text-black font-black py-5 px-12 rounded-lg shadow-[0_0_25px_rgba(165,242,255,0.4)] hover:shadow-[0_0_40px_rgba(165,242,255,0.6)] transition-all uppercase tracking-tighter text-center text-lg inline-block"
+          >
+            Quero meu acesso agora
+          </motion.a>
+          
+          <div className="flex -space-x-3 items-center justify-center">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-night flex items-center justify-center">
+                <Users size={20} className="text-neon/50" />
+              </div>
+            ))}
+            <div className="ml-6 flex flex-col items-start leading-none text-left">
+              <span className="text-white font-black text-sm">+1.500 Alunos</span>
+              <span className="text-[10px] uppercase text-metallic tracking-widest mt-1">Conteúdo validado</span>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
 };
 
 const SocialProof = () => {
+  const [selectedImgId, setSelectedImgId] = useState<string | null>(null);
+
   const testimonials = [
-    { name: "Carlos S.", loc: "São Paulo, SP", text: "Minha técnica mudou completamente em 3 semanas. Incrível!!" },
-    { name: "Júlia M.", loc: "Curitiba, PR", text: "Nunca imaginei que poderia usar IA pra criar clipes tão bons." },
-    { name: "Ricardo T.", loc: "Lisboa, PT", text: "Finalmente um método que foca em ganhar dinheiro com a música." },
-    { name: "Beatriz L.", loc: "Belo Horizonte, MG", text: "O suporte no WhatsApp é o diferencial. Milton é fera!" },
-    { name: "André F.", loc: "Rio de Janeiro, RJ", text: "Já bati meus primeiros 10k inscritos seguindo o passo a passo." },
-    { name: "Marcos P.", loc: "Orlando, FL", text: "Conteúdo denso e prático. Direto ao ponto, sem enrolação." },
+    {
+      name: "Kátia R.",
+      loc: "Curitiba, PR",
+      text: "Gente, pensem na minha alegria hoje! Obrigado, professor! Foi de primeira, sem precisar de vídeo de contestação. Foram 14 vídeos postados, dia sim, dia não, direcionados para os Estados Unidos! Glória a Deus! Já estou com outro canal em análise no mesmo formato, só no aguardo do resultado.",
+      imgId: "1MpMuHFNOB12HTWNtPTBNiUj2LkoLtgi_"
+    },
+    {
+      name: "Daniel S.",
+      loc: "Ribeirão Preto, SP",
+      text: "Olá, bom dia! Gostaria de agradecer ao Milton Tucunduva por todos os ensinamentos e incentivos. Acabo de monetizar meu canal com apenas 13 vídeos! Quero agradecer também a todos do grupo que estão sempre disponíveis para ajudar e tirar dúvidas, isso é fundamental. Essa troca de conhecimento faz toda a diferença e mostra que juntos evoluímos muito mais. Gratidão a todos!",
+      imgId: "1Na5yEMng1LuVX-7tBapjU_I7XaUjOLqX"
+    },
+    {
+      name: "Karina S.",
+      loc: "Blumenau, SC",
+      text: "Obrigada, professor Milton! Este já é o terceiro canal que consigo monetizar desde que me tornei sua aluna, e este é mais um canal focado no público alemão. Que Deus te abençoe por compartilhar tanto conhecimento!",
+      imgId: "1QVXp0rPYMp9B64nLN7uO1nyoL4dNlX4G"
+    },
+    {
+      name: "Beatriz S.",
+      loc: "Curitiba, PR",
+      text: "Consegui meu primeiro canal monetizado! 🥳 Muito obrigada, Milton Tucunduva, pelos ensinamentos. Valeu muito a pena! 🤑",
+      imgId: "1kXBLbUcO2Xp-eSwhod-Lwkby8_PjF03I"
+    },
+    {
+      name: "Felipe S.",
+      loc: "Curitiba, PR",
+      text: "Povo... monetizei meu primeiro canal de música! Confesso que era um nicho ao qual eu não dava tanta importância, até parar para assistir aos vídeos do Milton e resolver testar. Iniciei em março... Já criei dois canais de cara e, por incrível que pareça, os dois já bateram as métricas! Esse primeiro foi aprovado hoje e o outro já está em análise.",
+      imgId: "1pNJURk77q26NxH3vfzgx8IAXpk-GYg5e"
+    }
   ];
 
   return (
     <section id="testimonials" className="py-20 bg-night/30 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
-          <p className="text-neon font-bold tracking-widest mb-4">CONTEÚDO VALIDADO</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all">
-             <div className="flex items-center gap-2 text-2xl font-bold"><Users /> MILHARES DE ALUNOS</div>
-          </div>
+          <p className="text-neon font-black tracking-[0.25em] text-xs sm:text-sm mb-4">CONTEÚDO VALIDADO POR RESULTADOS</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black leading-tight uppercase tracking-tighter">
+            Quem aplica, <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.4)]">Monetiza!</span>
+          </h2>
+          <p className="text-metallic mt-4 text-base sm:text-lg max-w-2xl mx-auto">
+            Veja depoimentos reais direto do nosso grupo de alunos no WhatsApp mostrando seus canais monetizados.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="bg-black-pure p-6 rounded-2xl border border-neon/10 hover:border-neon/30 transition-colors"
+              onClick={() => setSelectedImgId(t.imgId)}
+              className="bg-night/50 rounded-[32px] border border-neon/10 hover:border-neon/30 transition-all overflow-hidden flex flex-col cursor-pointer group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(165,242,255,0.15)] relative h-full"
             >
-              <div className="flex gap-1 text-neon mb-4">
-                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="text-white/90 mb-4 italic">"{t.text}"</p>
-              <div>
-                <p className="font-bold text-sm">{t.name}</p>
-                <p className="text-metallic text-xs uppercase tracking-wider">{t.loc}</p>
+              {/* Image Container with aspect ratio and absolute centering */}
+              <div className="relative aspect-[3/4] w-full overflow-hidden flex items-start justify-center bg-black/40">
+                <img 
+                  src={`https://lh3.googleusercontent.com/d/${t.imgId}`} 
+                  alt={`Depoimento de ${t.name}`}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+                
+                {/* Visual Accent Inner Glow */}
+                <div className="absolute inset-0 border border-white/5 pointer-events-none rounded-[32px]" />
+                
+                {/* Hover overlay with conversion-focused CTA */}
+                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-neon text-black flex items-center justify-center shadow-[0_0_20px_#A5F2FF] transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <Plus size={24} />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-neon">Clique para ampliar</span>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Lightbox Modal for Screenshots */}
+      <AnimatePresence>
+        {selectedImgId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+            onClick={() => setSelectedImgId(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ type: "spring", duration: 0.4 }}
+              className="relative max-w-xl w-full bg-night/80 border border-neon/30 p-2 sm:p-4 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(165,242,255,0.2)] max-h-[90vh] flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedImgId(null)}
+                className="absolute top-4 right-4 w-10 h-10 bg-black/80 text-white rounded-full flex items-center justify-center hover:bg-neon hover:text-black transition-colors z-30 border border-neon/20 cursor-pointer"
+                aria-label="Fechar"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Screenshot Content */}
+              <div className="w-full flex-1 overflow-y-auto rounded-2xl flex items-center justify-center">
+                <img
+                  src={`https://lh3.googleusercontent.com/d/${selectedImgId}`}
+                  alt="Student Testimonial Print"
+                  referrerPolicy="no-referrer"
+                  className="max-w-full max-h-[75vh] object-contain rounded-xl"
+                />
+              </div>
+
+              <div className="text-center pt-4 pb-2 border-t border-neon/10 mt-4 text-metallic text-[11px] font-bold uppercase tracking-widest">
+                Print oficial extraído do grupo privado de alunos no WhatsApp • 100% Real
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
@@ -326,7 +504,7 @@ const ModulesCarousel = () => {
       title: "Projeto Videoclipe Avançado", 
       desc: "Domine técnicas cinematográficas para elevar o nível visual das produções.", 
       icon: <Video />, 
-      img: "https://images.unsplash.com/photo-1533107862482-0e6974b06917?q=80&w=600&auto=format&fit=crop" 
+      img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&auto=format&fit=crop" 
     },
     { 
       id: 9, 
@@ -344,18 +522,142 @@ const ModulesCarousel = () => {
     },
   ];
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const pauseTimeoutRef = useRef<any>(null);
+
+  // Auto-scrolling infinite linear marquee
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let animationId: number;
+    let lastTime = performance.now();
+    const speed = 40; // pixels per second
+
+    const animate = (time: number) => {
+      if (container) {
+        const delta = (time - lastTime) / 1000;
+        
+        if (!isPaused) {
+          container.scrollLeft += speed * delta;
+          
+          const half = container.scrollWidth / 2;
+          if (container.scrollLeft >= half) {
+            container.scrollLeft -= half;
+          }
+        }
+      }
+      lastTime = time;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, [isPaused]);
+
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const half = container.scrollWidth / 2;
+    if (container.scrollLeft >= half) {
+      container.scrollLeft -= half;
+    } else if (container.scrollLeft <= 0) {
+      container.scrollLeft += half;
+    }
+  };
+
+  const pauseAutoPlay = () => {
+    setIsPaused(true);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 5000);
+  };
+
+  const handlePrev = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    pauseAutoPlay();
+    container.scrollBy({ left: -344, behavior: "smooth" });
+  };
+
+  const handleNext = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    pauseAutoPlay();
+    container.scrollBy({ left: 344, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, []);
+
   return (
     <section id="modules" className="py-20 overflow-hidden bg-black-pure scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-4 mb-16 text-center md:text-left">
-        <h2 className="text-4xl md:text-6xl font-display font-bold">Conteúdo do <span className="text-neon">treinamento</span></h2>
-        <p className="text-metallic mt-4 text-lg">10 Módulos pensados para sua evolução acelerada no mercado digital.</p>
+      <div className="max-w-7xl mx-auto px-4 mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <h2 className="text-4xl md:text-6xl font-display font-bold">Conteúdo do <span className="text-neon">treinamento</span></h2>
+          <p className="text-metallic mt-4 text-lg">10 Módulos pensados para sua evolução acelerada no mercado digital.</p>
+        </div>
+        
+        {/* Manual Arrow Buttons for Desktop */}
+        <div className="hidden md:flex gap-4 mt-6 md:mt-0">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handlePrev}
+            className="w-12 h-12 rounded-full bg-night border border-neon/30 text-neon hover:text-white hover:border-neon flex items-center justify-center transition-colors shadow-[0_0_15px_rgba(165,242,255,0.1)] hover:shadow-[0_0_20px_rgba(165,242,255,0.4)] cursor-pointer"
+            aria-label="Módulo anterior"
+          >
+            <ChevronLeft size={24} />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handleNext}
+            className="w-12 h-12 rounded-full bg-night border border-neon/30 text-neon hover:text-white hover:border-neon flex items-center justify-center transition-colors shadow-[0_0_15px_rgba(165,242,255,0.1)] hover:shadow-[0_0_20px_rgba(165,242,255,0.4)] cursor-pointer"
+            aria-label="Próximo módulo"
+          >
+            <ChevronRight size={24} />
+          </motion.button>
+        </div>
       </div>
 
-      <div className="relative group/carousel">
-        <motion.div 
-           animate={{ x: ["0%", "-50%"] }}
-           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-           className="flex gap-6 whitespace-nowrap py-10"
+      <div 
+        className="relative group/carousel px-4"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Left Arrow Trigger Overlay for Mobile */}
+        <div className="absolute left-6 top-1/2 -translate-y-1/2 z-20 md:hidden">
+          <button
+            onClick={handlePrev}
+            className="w-10 h-10 rounded-full bg-black/75 border border-neon/30 text-neon flex items-center justify-center backdrop-blur-sm shadow-[0_0_10px_rgba(165,242,255,0.2)]"
+          >
+            <ChevronLeft size={20} />
+          </button>
+        </div>
+        
+        {/* Right Arrow Trigger Overlay for Mobile */}
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 z-20 md:hidden">
+          <button
+            onClick={handleNext}
+            className="w-10 h-10 rounded-full bg-black/75 border border-neon/30 text-neon flex items-center justify-center backdrop-blur-sm shadow-[0_0_10px_rgba(165,242,255,0.2)]"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        <div 
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="flex gap-6 overflow-x-auto select-none py-10 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {[...modules, ...modules].map((m, i) => (
             <div 
@@ -363,7 +665,7 @@ const ModulesCarousel = () => {
               className="flex-shrink-0 w-[320px] bg-night rounded-[32px] overflow-hidden border border-neon/10 glow-border hover:border-neon/40 hover:glow-shadow transition-all group"
             >
               <div className="h-48 relative overflow-hidden">
-                 <img src={m.img} alt={m.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+                 <img src={m.img} alt={m.title} referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
                  <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" />
                  <div className="absolute top-4 left-4 w-10 h-10 bg-neon/20 backdrop-blur-md rounded-xl flex items-center justify-center text-neon border border-neon/30">
                     {m.icon}
@@ -376,11 +678,11 @@ const ModulesCarousel = () => {
               </div>
             </div>
           ))}
-        </motion.div>
+        </div>
         
         {/* Gradients to fade edges */}
-        <div className="absolute top-0 left-0 w-32 md:w-64 h-full bg-gradient-to-r from-black-pure to-transparent z-10 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-32 md:w-64 h-full bg-gradient-to-l from-black-pure to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-16 md:w-48 h-full bg-gradient-to-r from-black-pure to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-16 md:w-48 h-full bg-gradient-to-l from-black-pure to-transparent z-10 pointer-events-none" />
       </div>
     </section>
   );
@@ -404,20 +706,20 @@ const Authority = () => (
         </div>
         <div className="space-y-8">
           <h2 className="text-sm font-bold text-white uppercase tracking-[0.3em] flex items-center">
-            <span className="w-8 h-[1px] bg-neon mr-4"></span> A Autoridade
+            <span className="w-8 h-[1px] bg-neon mr-4"></span> Conheça seu professor
           </h2>
           <h3 className="text-4xl md:text-6xl font-black text-white italic uppercase leading-none">Milton Tucunduva</h3>
           <p className="text-metallic text-lg leading-relaxed max-w-2xl">
-            Especialista em criação de projetos de música com IA, Milton Tucunduva vai muito além de apenas dar o passo a passo; ele faz o aluno aprender a ter autonomia e criar um PROJETO DE SUCESSO! Com faturamento alto em várias plataformas digitais no nicho de música, ele ensina exatamente o que aplica em seus projetos. Já ajudou milhares de alunos a saírem do completo zero para projetos profissionais, validados no mercado digital e faturando alto.
+            Como especialista em criação de projetos de música com IA, eu vou muito além de apenas te dar o passo a passo; eu te faço aprender a ter autonomia e criar um PROJETO DE SUCESSO! Com faturamento alto em várias plataformas digitais no nicho de música, eu te ensino exatamente o que aplico em meus projetos. Já ajudei milhares de alunos a saírem do completo zero para construírem projetos profissionais, validados no mercado digital e faturando alto.
           </p>
           <div className="grid grid-cols-2 gap-8 py-8 border-y border-[#0A192F]">
              <div>
-                <p className="text-4xl font-black text-white tracking-tighter">50K+</p>
-                <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">Faturamento Mensal</p>
+                <p className="text-2xl sm:text-3xl font-black text-white tracking-tighter">+ R$ 50.000,00</p>
+                <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">FATURAMENTO MENSAL</p>
              </div>
              <div>
-                <p className="text-4xl font-black text-white tracking-tighter">1.5K+</p>
-                <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">Alunos Ativos</p>
+                <p className="text-2xl sm:text-3xl font-black text-white tracking-tighter">+ 1.500</p>
+                <p className="text-[10px] text-neon font-black uppercase tracking-widest mt-1">ALUNOS ATIVOS</p>
              </div>
           </div>
         </div>
@@ -523,7 +825,7 @@ const FAQ = () => {
   const questions = [
     { q: "O curso serve para quem não sabe nada de produção?", a: "Sim! O método vai do absoluto zero até as técnicas mais avançadas de IA e distribuição." },
     { q: "Vou aprender a ganhar dinheiro de verdade?", a: "O foco principal é o mercado profissional. Te ensino a monetizar no YouTube, plataformas de streaming e serviços musicais." },
-    { q: "Como funciona o suporte?", a: "Você terá acesso a um grupo exclusivo no WhatsApp diretamente com o Milton e outros alunos para tirar dúvidas em tempo real." },
+    { q: "Como funciona o suporte?", a: "Você terá acesso a um grupo exclusivo no WhatsApp diretamente comigo e outros alunos para tirar dúvidas em tempo real." },
     { q: "Qual o tempo de acesso?", a: "O acesso é vitalício. Você paga uma vez e tem acesso a todas as atualizações futuras sem custo adicional." },
     { q: "Preciso de um computador potente?", a: "Não. Muitas das ferramentas de IA que usamos rodam na nuvem, permitindo que você crie clipes e músicas mesmo com um setup básico." },
   ];
@@ -565,15 +867,30 @@ const FAQ = () => {
 export default function App() {
   return (
     <div className="min-h-screen font-sans">
-      <Navbar />
+      <CountdownBanner />
+      {/* 1 - Seção hero */}
       <Hero />
-      <Reveal><SocialProof /></Reveal>
+      
+      {/* 2 - cansado de ser apenas mais... */}
       <Reveal><PainSolution /></Reveal>
+      
+      {/* 3 - o que você vai aprender */}
       <Reveal><MethodDescription /></Reveal>
+      
+      {/* 4 - conteúdo do treinamento */}
       <ModulesCarousel />
+      
+      {/* Depoimentos */}
+      <Reveal><SocialProof /></Reveal>
+      
+      {/* 5 - seção falando sobre o produtor */}
       <Reveal><Authority /></Reveal>
-      <Reveal><Guarantee /></Reveal>
+      
+      {/* 6 - 'o próximo nivel começa aqui" */}
       <Reveal><Pricing /></Reveal>
+      <Reveal><Guarantee /></Reveal>
+      
+      {/* 7 - FAQ */}
       <Reveal><FAQ /></Reveal>
       
       <footer className="py-12 border-t border-neon/10 text-center opacity-50 text-xs">
