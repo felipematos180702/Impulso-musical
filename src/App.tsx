@@ -157,26 +157,26 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative aspect-video w-full max-w-4xl bg-black rounded-2xl border border-neon/20 overflow-hidden group shadow-[0_0_50px_rgba(165,242,255,0.25)]"
+          className="relative aspect-video w-full max-w-4xl bg-black rounded-2xl border border-neon/20 overflow-hidden group shadow-[0_0_50px_rgba(165,242,255,0.25)] flex items-center justify-center cursor-pointer"
         >
-          {/* Scale technique to hide Google Drive UI while preserving exact 16:9 video aspect ratio on all devices */}
-          <div className="absolute inset-0 bg-black pointer-events-auto">
+          {/* Vimeo iframe */}
+          <div className="absolute inset-0 bg-black pointer-events-auto flex items-center justify-center">
             <iframe 
-              src="https://drive.google.com/file/d/1_c35SXY4zowZBHM1UOsziKU0LPQi0qMa/preview" 
+              src="https://player.vimeo.com/video/1200078240?title=0&byline=0&portrait=0" 
               title="Apresentação do Método" 
-              className="absolute w-full h-[300%] -top-full left-0 border-0 pointer-events-auto"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className="absolute w-full h-full border-0 pointer-events-auto"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
               allowFullScreen
             ></iframe>
           </div>
 
-          {/* User-friendly unmute instructions overlay banner (pointer-events-none so click passes through to Google's play button) */}
+          {/* User-friendly unmute instructions overlay banner */}
           <AnimatePresence>
             {showMutePrompt && (
               <motion.div 
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 pointer-events-none z-20 transition-all duration-500"
+                className="absolute inset-0 flex flex-col items-center justify-center bg-transparent pointer-events-none z-20 transition-all duration-500"
               >
                 {/* Visual pulse indicator to click below or above the native Play button */}
                 <motion.div 
@@ -191,7 +191,7 @@ const Hero = () => {
             )}
           </AnimatePresence>
 
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#222] z-10">
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#222] z-10 pointer-events-none">
             <div className="h-full w-1/3 bg-neon shadow-[0_0_10px_#A5F2FF]"></div>
           </div>
         </motion.div>
