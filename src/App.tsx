@@ -160,9 +160,10 @@ const Hero = () => {
           <span className="px-3 py-1 bg-night text-neon text-[10px] font-bold uppercase tracking-widest border border-neon/30 rounded-full inline-block">
             Validado no YouTube • 50k/Mês Orgânico
           </span>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-[1.1] md:leading-[1.2] uppercase tracking-tighter max-w-4xl mx-auto">
-            O JEITO CERTO PARA <span className="text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.6)]">Viver de Música</span> <br />
-            USANDO IA NAS PLATAFORMAS DIGITAIS
+          <h1 className="font-black text-white uppercase tracking-tighter max-w-4xl mx-auto flex flex-col">
+            <span className="text-xs sm:text-sm md:text-base tracking-[0.2em] font-extrabold text-white/75 mb-1.5 sm:mb-2">O JEITO CERTO PARA</span>
+            <span className="text-3xl sm:text-5xl md:text-6xl text-neon drop-shadow-[0_0_15px_rgba(165,242,255,0.6)] leading-none mb-2 sm:mb-3">VIVER DE MÚSICA</span>
+            <span className="text-base sm:text-2xl md:text-3xl text-white font-black tracking-tight sm:tracking-normal mt-1 sm:mt-1.5">USANDO IA NAS PLATAFORMAS DIGITAIS</span>
           </h1>
         </motion.div>
 
