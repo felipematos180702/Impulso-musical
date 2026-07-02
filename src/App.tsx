@@ -724,7 +724,10 @@ const Authority = () => (
   <section className="py-24 bg-gradient-to-b from-black-pure to-night/30">
     <div className="max-w-7xl mx-auto px-8">
         <div className="grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-center">
-        <div className="flex justify-center md:justify-start">
+        <div className="flex flex-col items-center md:items-start justify-center md:justify-start">
+          <h2 className="md:hidden text-[10px] sm:text-sm font-bold text-white uppercase tracking-[0.3em] flex items-center justify-center mb-6">
+            <span className="w-6 sm:w-8 h-[1px] bg-neon mr-3 sm:mr-4"></span> Conheça seu professor
+          </h2>
           <div className="relative group w-full max-w-[280px] sm:max-w-sm md:max-w-md">
             <div className="absolute inset-0 bg-neon/10 blur-[60px] md:blur-[80px] rounded-full group-hover:bg-neon/20 transition-all" />
             <div className="relative z-10 w-full aspect-square rounded-[2rem] overflow-hidden border border-neon/20 p-2 bg-night/20 backdrop-blur-sm">
@@ -737,7 +740,7 @@ const Authority = () => (
           </div>
         </div>
         <div className="space-y-6 md:space-y-8 text-center md:text-left">
-          <h2 className="text-[10px] sm:text-sm font-bold text-white uppercase tracking-[0.3em] flex items-center justify-center md:justify-start">
+          <h2 className="hidden md:flex text-[10px] sm:text-sm font-bold text-white uppercase tracking-[0.3em] items-center justify-center md:justify-start">
             <span className="w-6 sm:w-8 h-[1px] bg-neon mr-3 sm:mr-4"></span> Conheça seu professor
           </h2>
           <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-white italic uppercase leading-[1.1]">Milton Tucunduva</h3>
