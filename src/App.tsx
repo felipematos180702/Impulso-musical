@@ -321,7 +321,7 @@ const SocialProof = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {testimonials.map((t, i) => (
             <motion.div 
               key={i}
@@ -330,7 +330,7 @@ const SocialProof = () => {
               transition={{ delay: i * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
               onClick={() => setSelectedImgId(t.imgId)}
-              className="bg-night/50 rounded-2xl sm:rounded-[32px] border border-neon/10 hover:border-neon/30 transition-all overflow-hidden flex flex-col cursor-pointer group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(165,242,255,0.15)] relative h-full max-w-[240px] sm:max-w-none mx-auto w-full"
+              className="bg-night/50 rounded-xl sm:rounded-[32px] border border-neon/10 hover:border-neon/30 transition-all overflow-hidden flex flex-col cursor-pointer group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(165,242,255,0.15)] relative h-full max-w-[240px] sm:max-w-none mx-auto w-full"
             >
             <div className="w-full h-full relative overflow-hidden flex items-start justify-center bg-black/40">
               <div className="relative aspect-[3/4] w-full max-w-[240px] sm:max-w-full">
@@ -342,14 +342,14 @@ const SocialProof = () => {
                 />
                 
                 {/* Visual Accent Inner Glow */}
-                <div className="absolute inset-0 border border-white/5 pointer-events-none rounded-[32px]" />
+                <div className="absolute inset-0 border border-white/5 pointer-events-none rounded-xl sm:rounded-[32px]" />
                 
                 {/* Hover overlay with conversion-focused CTA */}
-                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
-                  <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-neon text-black flex items-center justify-center shadow-[0_0_20px_#A5F2FF] transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                    <Plus size={20} className="sm:w-6 sm:h-6" />
+                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-1 sm:gap-3">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-neon text-black flex items-center justify-center shadow-[0_0_20px_#A5F2FF] transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <Plus size={16} className="sm:w-6 sm:h-6" />
                   </div>
-                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-neon">Clique para ampliar</span>
+                  <span className="text-[8px] sm:text-xs font-black uppercase tracking-widest text-neon text-center px-1">Clique para ampliar</span>
                 </div>
               </div>
             </div>
