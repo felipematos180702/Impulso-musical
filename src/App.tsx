@@ -287,6 +287,24 @@ const SocialProof = () => {
       loc: "Curitiba, PR",
       text: "Povo... monetizei meu primeiro canal de música! Confesso que era um nicho ao qual eu não dava tanta importância, até parar para assistir aos vídeos do Milton e resolver testar. Iniciei em março... Já criei dois canais de cara e, por incrível que pareça, os dois já bateram as métricas! Esse primeiro foi aprovado hoje e o outro já está em análise.",
       imgId: "1pNJURk77q26NxH3vfzgx8IAXpk-GYg5e"
+    },
+    {
+      name: "Aluno",
+      loc: "Brasil",
+      text: "Mais resultados de alunos aplicando o método.",
+      imgId: "10ENcVleqj8v3Ro-chAxYhIVFJDn0FQ2L"
+    },
+    {
+      name: "Aluno",
+      loc: "Brasil",
+      text: "Resultados consistentes com a metodologia correta.",
+      imgId: "1o3iIq-HaeflQGXj77ZCkANNnTNYBR52M"
+    },
+    {
+      name: "Aluno",
+      loc: "Brasil",
+      text: "Canal aprovado na plataforma utilizando a IA.",
+      imgId: "1tbDPsSCptqJA8fA2thMuc2JZ0uwkkJPJ"
     }
   ];
 
