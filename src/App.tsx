@@ -259,6 +259,12 @@ const SocialProof = () => {
 
   const testimonials = [
     {
+      name: "Aluno",
+      loc: "Brasil",
+      text: "Canal aprovado na plataforma utilizando a IA.",
+      imgId: "1tbDPsSCptqJA8fA2thMuc2JZ0uwkkJPJ"
+    },
+    {
       name: "Kátia R.",
       loc: "Curitiba, PR",
       text: "Gente, pensem na minha alegria hoje! Obrigado, professor! Foi de primeira, sem precisar de vídeo de contestação. Foram 14 vídeos postados, dia sim, dia não, direcionados para os Estados Unidos! Glória a Deus! Já estou com outro canal em análise no mesmo formato, só no aguardo do resultado.",
@@ -299,12 +305,6 @@ const SocialProof = () => {
       loc: "Brasil",
       text: "Resultados consistentes com a metodologia correta.",
       imgId: "1o3iIq-HaeflQGXj77ZCkANNnTNYBR52M"
-    },
-    {
-      name: "Aluno",
-      loc: "Brasil",
-      text: "Canal aprovado na plataforma utilizando a IA.",
-      imgId: "1tbDPsSCptqJA8fA2thMuc2JZ0uwkkJPJ"
     }
   ];
 
