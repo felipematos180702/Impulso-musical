@@ -841,7 +841,7 @@ const Pricing = () => {
                                 <CheckCircle size={10} className="text-green-500 sm:hidden" />
                                 <CheckCircle size={12} className="text-green-500 hidden sm:block" />
                               </div>
-                              <span className="text-[11px] sm:text-sm font-bold text-white uppercase tracking-wide">+ Grupo Exclusivo no WhatsApp</span>
+                              <span className="text-[11px] sm:text-sm font-bold text-white uppercase tracking-wide">Bônus - Grupo do whatsapp</span>
                             </li>
                         </ul>
 
